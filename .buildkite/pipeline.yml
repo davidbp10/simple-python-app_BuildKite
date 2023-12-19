@@ -26,7 +26,6 @@ steps:
       echo "After mkdir"
       docker run --rm -v $(pwd)/sources:/src cdrx/pyinstaller-linux:python2 'pyinstaller -F add2vals.py' &&
       echo "After Docker run"
-      /home/david/.buildkite-agent/bin/buildkite-agent artifact upload 'sources/add2vals'
     plugins:
       - docker#v3.8.0:
           image: "cdrx/pyinstaller-linux:python2"
