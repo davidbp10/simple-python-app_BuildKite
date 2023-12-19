@@ -1,7 +1,6 @@
 steps:
   - label: "Build"
-    command: 'python -m py_compile sources/add2vals.py sources/calc.py && \
-              tar cvfz compiled-results.tar.gz sources/*.py* && ls'
+    command: 'python -m py_compile sources/add2vals.py sources/calc.py && tar cvfz compiled-results.tar.gz sources/*.py* && ls'
     key: 'build'
     plugins:
       - docker:
@@ -21,8 +20,7 @@ steps:
       - "test-reports/results.xml"
 
   - label: "Deliver"
-    command: 'tar xvfz compiled-results.tar.gz && \
-              docker run --rm -v $(pwd)/sources:/src ${IMAGE} 'pyinstaller -F add2vals.py'"
+    command: 'tar xvfz compiled-results.tar.gz && docker run --rm -v $(pwd)/sources:/src ${IMAGE} 'pyinstaller -F add2vals.py'"
     key: 'deliver'
     plugins:
       docker:
