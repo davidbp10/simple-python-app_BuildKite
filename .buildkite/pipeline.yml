@@ -26,8 +26,8 @@ steps:
           image: "cdrx/pyinstaller-linux:python2"
           always_pull: true
           workdir: "/workdir"
-      artifact_paths:
-          - "logs/**/*"
-          - "coverage/**/*"
+    artifact_paths:
+        - "logs/**/*"
+        - "coverage/**/*"
 
 
