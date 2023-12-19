@@ -27,9 +27,9 @@ steps:
       - 'docker run --rm -v $(pwd)/sources:/src cdrx/pyinstaller-linux:python2 "rm -rf build dist"'
     plugins:
       - docker#v3.8.0:
-        image: 'python:3.12.1-alpine3.19'
+        image: "python:3.12.1-alpine3.19"
         always_pull: true
-        workdir: '/workdir'
+        workdir: "/workdir"
     env:
       VOLUME: '$(pwd)/sources:/src'
       IMAGE: 'cdrx/pyinstaller-linux:python2'
