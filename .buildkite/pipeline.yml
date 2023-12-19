@@ -26,7 +26,8 @@ steps:
           image: "cdrx/pyinstaller-linux:python2"
           always_pull: true
           workdir: "/workdir"
-      - artifacts#v1.3.0:
-          download: "sources/add2vals"
+      artifact_paths:
+          - "logs/**/*"
+          - "coverage/**/*"
 
 
