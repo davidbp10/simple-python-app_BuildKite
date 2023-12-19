@@ -20,7 +20,7 @@ steps:
   - wait
 
   - label: ":rocket: Deliver"
-    command: 
+    - command: 
       - "mkdir -p ${BUILDKITE_BUILD_ID}"
       - "buildkite-agent artifact download "sources/*.py*" ${BUILDKITE_BUILD_ID}"
       - "docker run --rm -v $(pwd)/sources:/src cdrx/pyinstaller-linux:python2 "pyinstaller -F add2vals.py""
