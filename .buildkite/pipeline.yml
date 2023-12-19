@@ -6,6 +6,7 @@ steps:
       - docker:
           image: 'python:3.12.1-alpine3.19'
           workdir: '/workdir'
+          user: root
     artifacts:
       - 'compiled-results.tar.gz'
 
@@ -16,6 +17,7 @@ steps:
       - docker:
           image: 'qnib/pytest'
           workdir: '/workdir'
+          user: root
     artifacts:
       - 'test-reports/results.xml'
 
@@ -26,5 +28,6 @@ steps:
       docker:
         image: 'cdrx/pyinstaller-linux:python2'
         workdir: '/workdir'
+        user: root
     artifacts:
       - 'sources/dist/add2vals/**/*'
