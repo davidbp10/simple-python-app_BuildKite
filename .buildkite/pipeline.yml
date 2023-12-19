@@ -1,33 +1,26 @@
+# Buildkite pipeline
 steps:
-  - label: ':construction_worker: Build'
-    command: 'python -m py_compile sources/add2vals.py sources/calc.py && tar cvfz compiled-results.tar.gz sources/*.py* && ls'
-    key: 'build'
+  - label: ":construction_worker: Build"
+    command: "python -m py_compile sources/add2vals.py sources/calc.py"
     plugins:
-      - docker:
-          image: 'python:3.12.1-alpine3.19'
-          workdir: '/workdir'
-          user: root
-    artifacts:
-      - 'compiled-results.tar.gz'
+      - docker#v3.8.0:
+          image: "python:3.12.1-alpine3.19"
+          always_pull: true
+          workdir: "/workdir"
+    artifact_paths: "sources/*.py*"
+  - wait
 
-  - label: ':white_check_mark: Test'
-    command: 'py.test --junit-xml test-reports/results.xml sources/test_calc.py'
-    key: 'test'
+  - label: ":white_check_mark: Test"
+    command: "py.test --junit-xml test-reports/results.xml sources/test_calc.py"
     plugins:
-      - docker:
-          image: 'qnib/pytest'
-          workdir: '/workdir'
-          user: root
-    artifacts:
-      - 'test-reports/results.xml'
+      - docker#v3.8.0:
+          image: "qnib/pytest"
+          always_pull: true
+          workdir: "/workdir"
+  - wait
 
-  - label: ':rocket: Deliver'
-    command: 'tar xvfz compiled-results.tar.gz && docker run --rm -v $(pwd)/sources:/src ${IMAGE} "pyinstaller -F add2vals.py"'
-    key: 'deliver'
+  - label: ":rocket: Deliver"
+    command: "docker run --rm -v $(pwd)/sources:/src cdrx/pyinstaller-linux:python2 'pyinstaller -F add2vals.py'"
     plugins:
-      docker:
-        image: 'cdrx/pyinstaller-linux:python2'
-        workdir: '/workdir'
-        user: root
-    artifacts:
-      - 'sources/dist/add2vals/**/*'
+      - artifacts#v1.3.0:
+          download: "sources/dist/add2vals"
