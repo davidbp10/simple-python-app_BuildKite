@@ -8,6 +8,7 @@ steps:
           always_pull: true
           workdir: "/workdir"
     artifact_paths: "sources/*.py*"
+  - wait
 
   - label: ":white_check_mark: Test"
     command: "py.test --junit-xml test-reports/results.xml sources/test_calc.py"
@@ -16,9 +17,10 @@ steps:
           image: "qnib/pytest"
           always_pull: true
           workdir: "/workdir"
+  - wait
 
   - label: ":rocket: Deliver"
-    command: "mkdir -p ${BUILDKITE_BUILD_ID} && docker run --rm -v $(pwd)/sources:/src cdrx/pyinstaller-linux:python2 'pyinstaller -F add2vals.py && /home/david/.buildkite-agent/bin/buildkite-agent artifact upload "sources/dist/add2vals"'
+    command: "mkdir -p ${BUILDKITE_BUILD_ID} && docker run --rm -v $(pwd)/sources:/src cdrx/pyinstaller-linux:python2 'pyinstaller -F add2vals.py' && /home/david/.buildkite-agent/bin/buildkite-agent artifact upload 'sources/dist/add2vals'"
     plugins:
       - docker#v3.8.0:
         image: "cdrx/pyinstaller-linux:python2"
