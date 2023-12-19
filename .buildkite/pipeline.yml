@@ -20,7 +20,7 @@ steps:
       - 'test-reports/results.xml'
 
   - label: ':rocket: Deliver'
-    command: 'tar xvfz compiled-results.tar.gz && docker run --rm -v $(pwd)/sources:/src ${IMAGE} 'pyinstaller -F add2vals.py''
+    command: 'tar xvfz compiled-results.tar.gz && docker run --rm -v $(pwd)/sources:/src ${IMAGE} "pyinstaller -F add2vals.py"'
     key: 'deliver'
     plugins:
       docker:
