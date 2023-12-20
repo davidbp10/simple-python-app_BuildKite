@@ -23,7 +23,7 @@ steps:
     command: |
       python -m py_compile sources/add2vals.py  # Compila add2vals.py
       mkdir -p /workdir/deliver
-      cp sources/add2vals.pyc /workdir/deliver/add2vals  # Copia el ejecutable compilado
+      cp sources/add2vals* /workdir/deliver/add2vals  # Copia el ejecutable compilado
     plugins:
       - docker#v3.8.0:
           image: "python:3.12.1-alpine3.19"
