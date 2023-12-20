@@ -24,7 +24,7 @@ steps:
       python -m py_compile sources/add2vals.py  # Compila add2vals.py
       ls sources/__pycache__
       mkdir -p /workdir/deliver
-      cp sources/add2vals* /workdir/deliver/  # Copia el ejecutable compilado
+      cp sources/__pycache__/add2vals* /workdir/deliver/  # Copia el ejecutable compilado
     plugins:
       - docker#v3.8.0:
           image: "python:3.12.1-alpine3.19"
