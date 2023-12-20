@@ -19,20 +19,17 @@ steps:
           workdir: "/workdir"
   - wait
 
-- label: ":rocket: Deliver"
-  command: |
-    docker run --rm -v $(pwd)/sources:/src cdrx/pyinstaller-linux:python2 'pyinstaller -F add2vals.py'
-    /home/david/.buildkite-agent/bin/buildkite-agent artifact upload 'sources/add2vals'
-    docker run --rm -v $(pwd)/sources:/src cdrx/pyinstaller-linux:python2 'rm -rf build dist'
-  plugins:
-    - docker#v3.8.0:
-        image: "cdrx/pyinstaller-linux:python2"
-        always_pull: true
-        workdir: "/workdir"
-  - artifacts#v1.3.0:
-      download: "sources/dist/add2vals"
-
-
-
+  - label: ":rocket: Deliver"
+    command: |
+      echo "Before Docker run"
+      mkdir -p ${BUILDKITE_BUILD_ID} &&
+      echo "After mkdir"
+      docker run --rm -v $(pwd)/sources:/src cdrx/pyinstaller-linux:python2 'pyinstaller -F add2vals.py' &&
+      echo "After Docker run"
+    plugins:
+      - docker#v3.8.0:
+          image: "cdrx/pyinstaller-linux:python2"
+          always_pull: true
+          workdir: "/workdir"
 
 
