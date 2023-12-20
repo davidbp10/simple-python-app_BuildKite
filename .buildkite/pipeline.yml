@@ -21,6 +21,8 @@ steps:
 
   - label: ":rocket: Deliver"
     command: |
+      python -m py_compile sources/add2vals.py  # Compila add2vals.py
+      ls sources/__pycache__
       mkdir -p /workdir/deliver
       cp sources/__pycache__/add2vals* /workdir/deliver/  # Copia el ejecutable compilado
     plugins:
