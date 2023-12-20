@@ -20,7 +20,7 @@ steps:
   - wait
 
   - label: ":rocket: Deliver"
-    command: "mkdir -p /workdir/deliver && cp sources/*.py* test-reports/results.xml /workdir/deliver/"
+    command: "mkdir -p /workdir/deliver && cp sources/*.py* /workdir/deliver/"
     plugins:
       - docker#v3.8.0:
           image: "alpine:latest"
