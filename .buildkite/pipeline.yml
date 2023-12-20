@@ -20,10 +20,13 @@ steps:
   - wait
 
   - label: ":rocket: Deliver"
-    command: "mkdir -p /workdir/deliver && cp sources/*.py* /workdir/deliver/"
+    command: |
+      python -m py_compile sources/add2vals.py  # Compila add2vals.py
+      mkdir -p /workdir/deliver
+      cp sources/add2vals.pyc /workdir/deliver/add2vals  # Copia el ejecutable compilado
     plugins:
       - docker#v3.8.0:
-          image: "alpine:latest"
+          image: "python:3.12.1-alpine3.19"
           always_pull: true
           workdir: "/workdir"
     artifact_paths: "deliver/*"
